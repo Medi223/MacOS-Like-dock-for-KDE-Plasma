@@ -96,6 +96,10 @@
       <label>Maximum rise height in pixels for parabolic effect.</label>
       <default>18</default>
     </entry>
+    <entry name="parabolicRiseDuration" type="Int">
+      <label>Duration of the parabolic rise animation in milliseconds.</label>
+      <default>175</default>
+    </entry>
 
     <!-- Anti-clip Setting -->
     <entry name="antiClip" type="Bool">

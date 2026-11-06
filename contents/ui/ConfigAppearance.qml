@@ -18,6 +18,7 @@ KCM.SimpleKCM {
     property real cfg_neighborZoomFactor: 1.1066666666666667
     property alias cfg_parabolicEnabled: parabolicEnabledCheck.checked
     property alias cfg_maxParabolicRise: parabolicRiseSlider.value
+    property alias cfg_parabolicRiseDuration: parabolicRiseDurationSlider.value
     property alias cfg_iconSpacing: iconSpacingSlider.value
     property alias cfg_fill: fillCheck.checked
     property alias cfg_antiClip: antiClipCheck.checked
@@ -140,6 +141,27 @@ KCM.SimpleKCM {
             Kirigami.FormData.label: i18n("Rise height:")
             QQC2.Label {
                 text: parabolicRiseSlider.value + " px"
+            }
+        }
+
+        QQC2.Slider {
+            id: parabolicRiseDurationSlider
+            Kirigami.FormData.label: i18n("Rise animation speed:")
+            from: 50
+            to: 500
+            stepSize: 25
+            enabled: zoomEnabledCheck.checked && parabolicEnabledCheck.checked
+
+            QQC2.ToolTip {
+                text: i18n("Lower values are faster; higher values are slower.")
+                visible: parabolicRiseDurationSlider.hovered || parabolicRiseDurationSlider.pressed
+            }
+        }
+
+        RowLayout {
+            Kirigami.FormData.label: i18n("Duration:")
+            QQC2.Label {
+                text: parabolicRiseDurationSlider.value + " ms"
             }
         }
 

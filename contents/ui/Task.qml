@@ -105,12 +105,22 @@ Item {
     // Parabolic rise properties
     property bool parabolicEnabled: true
     property int maxParabolicRise: 12
+    property int parabolicRiseDuration: 175
     property real targetRise: 0
 
     // Frozen zoom/rise: tracks targetZoom while mouse is in area,
     // freezes at last value when mouse leaves (for smooth exit animation)
     property real activeZoom: 1.0
     property real activeRise: 0
+
+    // Smoothly animate the single icon's rise as the pointer moves between tasks.
+    // A user-configurable duration controls how quickly the icon reaches its target.
+    Behavior on activeRise {
+        NumberAnimation {
+            duration: taskItem.parabolicRiseDuration
+            easing.type: Easing.OutCubic
+        }
+    }
 
     onTargetZoomChanged: {
         if (isTransitioning) activeZoom = targetZoom;
@@ -135,6 +145,8 @@ Item {
     // Computed display values: instant response via activeZoom, smooth enter/exit via multiplier
     readonly property real displayZoom: 1.0 + (activeZoom - 1.0) * zoomMultiplier
     readonly property real displayRise: activeRise * zoomMultiplier
+    // Driven by TaskList so the bounce survives launcher-to-startup/task delegate changes.
+    property real clickBounceOffset: 0
 
     // Hover state
     property bool hovered: mouseArea.containsMouse
@@ -300,11 +312,13 @@ Item {
         // Rise direction: away from the panel edge
         anchors.verticalCenterOffset: {
             if (taskItem.vertical) return 0;
-            return taskItem.panelOnTop ? taskItem.displayRise : -taskItem.displayRise;
+            const offset = taskItem.displayRise + taskItem.clickBounceOffset;
+            return taskItem.panelOnTop ? offset : -offset;
         }
         anchors.horizontalCenterOffset: {
             if (!taskItem.vertical) return 0;
-            return taskItem.panelOnLeft ? taskItem.displayRise : -taskItem.displayRise;
+            const offset = taskItem.displayRise + taskItem.clickBounceOffset;
+            return taskItem.panelOnLeft ? offset : -offset;
         }
         opacity: taskItem.isDragging ? 0.4 : 1.0
 

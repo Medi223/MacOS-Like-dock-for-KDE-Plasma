@@ -29,6 +29,7 @@ PlasmoidItem {
     readonly property real neighborZoomFactor: Plasmoid.configuration.neighborZoomFactor
     readonly property bool parabolicEnabled: Plasmoid.configuration.parabolicEnabled
     readonly property int maxParabolicRise: Plasmoid.configuration.maxParabolicRise
+    readonly property int parabolicRiseDuration: Plasmoid.configuration.parabolicRiseDuration
 
     // Audio properties from config
     readonly property bool showAudioIndicator: Plasmoid.configuration.showAudioIndicator
@@ -240,6 +241,7 @@ PlasmoidItem {
             widgetHovered: widgetHoverHandler.hovered
             parabolicEnabled: root.parabolicEnabled
             maxParabolicRise: root.maxParabolicRise
+            parabolicRiseDuration: root.parabolicRiseDuration
             shrinkDistant: false
             distantShrinkFactor: 1.0
             antiClip: root.antiClip
@@ -250,6 +252,7 @@ PlasmoidItem {
 
             onTaskClicked: function(index, button, modifiers) {
                 if (button === Qt.LeftButton) {
+                    taskList.bounceTask(index);
                     root.activateEntry(index, modifiers);
                 } else if (button === Qt.MiddleButton) {
                     handleMiddleClick(tasksModel.makeModelIndex(index));

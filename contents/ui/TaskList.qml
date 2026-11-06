@@ -23,6 +23,7 @@ Item {
     property bool widgetHovered: false
     property bool parabolicEnabled: true
     property int maxParabolicRise: 12
+    property int parabolicRiseDuration: 175
     property bool shrinkDistant: false
     property real distantShrinkFactor: 0.8
     property bool antiClip: false
@@ -134,6 +135,41 @@ Item {
     signal taskFilesDropped(int index, var urls)
     signal taskLauncherDropped(var urls)
     signal taskDragHover(int index, bool isDragHovered)
+
+    // Keep the bounce state on TaskList rather than on a task delegate. When a
+    // pinned launcher starts an app, the model can replace its delegate before
+    // the first animation frame; this shared state carries the bounce into the
+    // replacement startup/window delegate at the same dock index.
+    property int bounceIndex: -1
+    property real bounceOffset: 0
+
+    function bounceTask(index) {
+        if (index < 0 || index >= taskRepeater.count) {
+            return;
+        }
+        bounceIndex = index;
+        clickBounceAnimation.stop();
+        bounceOffset = 0;
+        clickBounceAnimation.start();
+    }
+
+    SequentialAnimation {
+        id: clickBounceAnimation
+        NumberAnimation {
+            target: taskListRoot
+            property: "bounceOffset"
+            to: Math.max(10, taskListRoot.effectiveIconSize * 0.35)
+            duration: 130
+            easing.type: Easing.OutCubic
+        }
+        NumberAnimation {
+            target: taskListRoot
+            property: "bounceOffset"
+            to: 0
+            duration: 180
+            easing.type: Easing.InCubic
+        }
+    }
 
     function getTaskAt(index) {
         return taskRepeater.itemAt(index);
@@ -457,6 +493,8 @@ Item {
                 isTransitioning: taskListRoot.mouseInArea
                 parabolicEnabled: taskListRoot.parabolicEnabled
                 maxParabolicRise: taskListRoot.maxParabolicRise
+                parabolicRiseDuration: taskListRoot.parabolicRiseDuration
+                clickBounceOffset: index === taskListRoot.bounceIndex ? taskListRoot.bounceOffset : 0
 
                 targetZoom: {
                     if (!taskListRoot.zoomEnabled) return 1.0;
@@ -505,6 +543,10 @@ Item {
                 targetRise: {
                     if (!taskListRoot.parabolicEnabled) return 0;
                     if (!taskListRoot.mouseInArea || taskListRoot.mousePos < 0) return 0;
+
+                    // Apply the parabolic rise only to the icon under the pointer.
+                    // Neighboring icons keep their normal vertical position.
+                    if (index !== taskListRoot.hoveredIndex) return 0;
 
                     var itemSize = effectiveIconSize + itemSpacing;
                     var iconCenter = index * itemSize + effectiveIconSize / 2;
