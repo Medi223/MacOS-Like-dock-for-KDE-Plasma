@@ -6,7 +6,7 @@
 - Added an option to restrict parabolic rise to only the icon under the pointer.
 - Both new options default to off, preserving the original dock behaviour for new installs.
 - Retained the configurable parabolic rise animation duration (50-500 ms; default 175 ms).
-- Tested and working on: CachyOS, KDE Plasma Version 6.8.2, KDE Frameworks 6.31.0, Qt 6.12.0, Kernel 7.3.1-1-cachyos.
+- Tested and working on: CachyOS, KDE Plasma 6.8.2, KDE Frameworks 6.31.0, Qt 6.12.0, Kernel 7.3.1-1-cachyos.
 
 macOS-like icon dock for Plasma 6: zoom on hover, configurable parabolic rise, optional single-icon rise and click bounce, and pinned launchers.
 
