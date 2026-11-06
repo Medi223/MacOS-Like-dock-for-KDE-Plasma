@@ -1,5 +1,7 @@
 # Icons-Only Task Manager 2
 
+GridyushkoF is the original creator. I just used ChatGPT to make some minor personal tweaks.
+
 ## 1.4.5
 
 - Added an Appearance option to enable or disable the click bounce animation.
