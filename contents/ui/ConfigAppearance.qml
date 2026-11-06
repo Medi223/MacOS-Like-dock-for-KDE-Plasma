@@ -19,6 +19,8 @@ KCM.SimpleKCM {
     property alias cfg_parabolicEnabled: parabolicEnabledCheck.checked
     property alias cfg_maxParabolicRise: parabolicRiseSlider.value
     property alias cfg_parabolicRiseDuration: parabolicRiseDurationSlider.value
+    property alias cfg_singleIconParabolicRise: singleIconParabolicRiseCheck.checked
+    property alias cfg_clickBounceEnabled: clickBounceEnabledCheck.checked
     property alias cfg_iconSpacing: iconSpacingSlider.value
     property alias cfg_fill: fillCheck.checked
     property alias cfg_antiClip: antiClipCheck.checked
@@ -128,6 +130,13 @@ KCM.SimpleKCM {
             enabled: zoomEnabledCheck.checked
         }
 
+        QQC2.CheckBox {
+            id: singleIconParabolicRiseCheck
+            Kirigami.FormData.label: i18n("Rise behaviour:")
+            text: i18n("Only lift the icon under the pointer")
+            enabled: zoomEnabledCheck.checked && parabolicEnabledCheck.checked
+        }
+
         QQC2.Slider {
             id: parabolicRiseSlider
             Kirigami.FormData.label: i18n("Rise height:")
@@ -163,6 +172,17 @@ KCM.SimpleKCM {
             QQC2.Label {
                 text: parabolicRiseDurationSlider.value + " ms"
             }
+        }
+
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Click Animation")
+        }
+
+        QQC2.CheckBox {
+            id: clickBounceEnabledCheck
+            Kirigami.FormData.label: i18n("Icon bounce:")
+            text: i18n("Bounce an icon once when clicked")
         }
 
         Kirigami.Separator {

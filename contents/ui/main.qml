@@ -30,6 +30,8 @@ PlasmoidItem {
     readonly property bool parabolicEnabled: Plasmoid.configuration.parabolicEnabled
     readonly property int maxParabolicRise: Plasmoid.configuration.maxParabolicRise
     readonly property int parabolicRiseDuration: Plasmoid.configuration.parabolicRiseDuration
+    readonly property bool singleIconParabolicRise: Plasmoid.configuration.singleIconParabolicRise
+    readonly property bool clickBounceEnabled: Plasmoid.configuration.clickBounceEnabled
 
     // Audio properties from config
     readonly property bool showAudioIndicator: Plasmoid.configuration.showAudioIndicator
@@ -242,6 +244,7 @@ PlasmoidItem {
             parabolicEnabled: root.parabolicEnabled
             maxParabolicRise: root.maxParabolicRise
             parabolicRiseDuration: root.parabolicRiseDuration
+            singleIconParabolicRise: root.singleIconParabolicRise
             shrinkDistant: false
             distantShrinkFactor: 1.0
             antiClip: root.antiClip
@@ -252,7 +255,9 @@ PlasmoidItem {
 
             onTaskClicked: function(index, button, modifiers) {
                 if (button === Qt.LeftButton) {
-                    taskList.bounceTask(index);
+                    if (root.clickBounceEnabled) {
+                        taskList.bounceTask(index);
+                    }
                     root.activateEntry(index, modifiers);
                 } else if (button === Qt.MiddleButton) {
                     handleMiddleClick(tasksModel.makeModelIndex(index));

@@ -1,6 +1,13 @@
 # Icons-Only Task Manager 2
 
-macOS-like icon dock for Plasma 6: zoom on hover, single-icon parabolic rise, click bounce, and pinned launchers.
+## 1.4.5
+
+- Added an Appearance option to enable or disable the click bounce animation.
+- Added an option to restrict parabolic rise to only the icon under the pointer.
+- Both new options default to off, preserving the original dock behaviour for new installs.
+- Retained the configurable parabolic rise animation duration (50-500 ms; default 175 ms).
+
+macOS-like icon dock for Plasma 6: zoom on hover, configurable parabolic rise, optional single-icon rise and click bounce, and pinned launchers.
 
 https://store.kde.org/p/2352806/
 

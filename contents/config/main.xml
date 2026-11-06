@@ -100,6 +100,14 @@
       <label>Duration of the parabolic rise animation in milliseconds.</label>
       <default>175</default>
     </entry>
+    <entry name="singleIconParabolicRise" type="Bool">
+      <label>Whether only the icon under the pointer rises instead of the neighbouring icons.</label>
+      <default>false</default>
+    </entry>
+    <entry name="clickBounceEnabled" type="Bool">
+      <label>Whether a task icon bounces once when clicked.</label>
+      <default>false</default>
+    </entry>
 
     <!-- Anti-clip Setting -->
     <entry name="antiClip" type="Bool">

@@ -24,6 +24,7 @@ Item {
     property bool parabolicEnabled: true
     property int maxParabolicRise: 12
     property int parabolicRiseDuration: 175
+    property bool singleIconParabolicRise: false
     property bool shrinkDistant: false
     property real distantShrinkFactor: 0.8
     property bool antiClip: false
@@ -544,9 +545,9 @@ Item {
                     if (!taskListRoot.parabolicEnabled) return 0;
                     if (!taskListRoot.mouseInArea || taskListRoot.mousePos < 0) return 0;
 
-                    // Apply the parabolic rise only to the icon under the pointer.
-                    // Neighboring icons keep their normal vertical position.
-                    if (index !== taskListRoot.hoveredIndex) return 0;
+                    // Optional single-icon mode. When disabled, retain the original
+                    // parabolic influence curve across neighbouring icons.
+                    if (taskListRoot.singleIconParabolicRise && index !== taskListRoot.hoveredIndex) return 0;
 
                     var itemSize = effectiveIconSize + itemSpacing;
                     var iconCenter = index * itemSize + effectiveIconSize / 2;
